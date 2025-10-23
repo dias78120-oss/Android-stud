@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Сыграешь?</string>
+    <string name="start">Начать</string>
+    <string name="back">Назад</string>
+    <string name="Level">Уровень:</string>
+    <string name="Level1">Уровень 1</string>
+    <string name="Level2">Уровень 2</string>
+    <string name="Level3">Уровень 3</string>
+    <string name="Level4">Уровень 4</string>
+    <string name="Level5">Уровень 5</string>
+    <string name="Level6">Уровень 6</string>
+    <string name="Level7">Уровень 7</string>
+    <string name="Level8">Уровень 8</string>
+    <string name="textcontinue">Продолжить</string>
+    <string name="button">кнопка</string>
+    <string name="default_web_client_id">926841970234-vs5ebuk0b9ggj3c2fj341uo9jlj9r9t9.apps.googleusercontent.com</string>
+
+</resources>

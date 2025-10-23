@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "926841970234",
+    "firebase_url": "https://auth-4370c-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "auth-4370c",
+    "storage_bucket": "auth-4370c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926841970234:android:d419151123dfaf72885f03",
+        "android_client_info": {
+          "package_name": "com.example.play"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "926841970234-vs5ebuk0b9ggj3c2fj341uo9jlj9r9t9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBetb5WaDCqksjnYo5dPHs8SemI0x7T5lU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "926841970234-vs5ebuk0b9ggj3c2fj341uo9jlj9r9t9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

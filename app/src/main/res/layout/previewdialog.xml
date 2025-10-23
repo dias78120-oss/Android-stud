@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/dialogfon"
+    android:background="@drawable/preview"
+    android:layout_gravity="center"
+    android:scaleType="centerCrop"
+    android:layout_margin="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/btnclose"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="start"
+            android:background="@drawable/button_stroke_black30_press_white"
+            android:gravity="center"
+            android:text="&#60;"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/previewimg"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="45"
+            android:src="@drawable/fpreview" />
+
+        <TextView
+            android:id="@+id/textdescription"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="30"
+            android:text="@string/level1"
+            android:textColor="@color/black75"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btncontinue"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="10"
+            android:backgroundTint="@color/black20"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/textcontinue"
+            android:textAllCaps="true"
+            android:textColor="@color/black75"
+            android:textSize="24sp" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lvl1text0">Ноль</string>
+    <string name="lvl1text1">Один</string>
+    <string name="lvl1text2">Два</string>
+    <string name="lvl1text3">Три</string>
+    <string name="lvl1text4">Четыре</string>
+    <string name="lvl1text5">Пять</string>
+    <string name="lvl1text6">Шесть</string>
+    <string name="lvl1text7">Семь</string>
+    <string name="lvl1text8">Восемь</string>
+    <string name="lvl1text9">Девять</string>
+
+    <string name="lvl2text1">I</string>
+    <string name="lvl2text2">II</string>
+    <string name="lvl2text3">III</string>
+    <string name="lvl2text4">IV</string>
+    <string name="lvl2text5">V</string>
+    <string name="lvl2text6">VI</string>
+    <string name="lvl2text7">VII</string>
+    <string name="lvl2text8">VIII</string>
+    <string name="lvl2text9">IX</string>
+    <string name="lvl2text10">X</string>
+
+    <string name="lvl5text1">Яблоко</string>
+    <string name="lvl5text2">мишка</string>
+    <string name="lvl5text3">мороженное</string>
+    <string name="lvl5text4">машика</string>
+    <string name="lvl5text5">блины</string>
+    <string name="lvl5text6">шишка</string>
+    <string name="lvl5text7">макароны</string>
+    <string name="lvl5text8">ключ</string>
+    <string name="lvl5text9">банан</string>
+    <string name="lvl5text10">гаечный ключ</string>
+    <string name="lvl5text11">виноград</string>
+    <string name="lvl5text12">болты</string>
+    <string name="lvl5text13">курица</string>
+    <string name="lvl5text14">шины</string>
+    <string name="lvl5text15">щаурмаа</string>
+    <string name="lvl5text16">обувь</string>
+    <string name="lvl5text17">капуста</string>
+    <string name="lvl5text18">шар</string>
+    <string name="lvl5text19">салат</string>
+    <string name="lvl5text20">пластик</string>
+
+    <string name="lvl7text1">Рыбка</string>
+    <string name="lvl7text2">Птица</string>
+    <string name="lvl7text3">Кролик</string>
+    <string name="lvl7text4">Обезьяна</string>
+    <string name="lvl7text5">Кот</string>
+    <string name="lvl7text6">Собака</string>
+    <string name="lvl7text7">Гиена</string>
+    <string name="lvl7text8">Коза</string>
+    <string name="lvl7text9">Овца</string>
+    <string name="lvl7text10">Дельфин </string>
+    <string name="lvl7text11">Тигр</string>
+    <string name="lvl7text12">Верблюд</string>
+    <string name="lvl7text13">Горилла</string>
+    <string name="lvl7text14">Бык</string>
+    <string name="lvl7text15">Акула</string>
+    <string name="lvl7text16">Медведь</string>
+    <string name="lvl7text17">Носорог</string>
+    <string name="lvl7text18">Жираф</string>
+    <string name="lvl7text19">Слон</string>
+    <string name="lvl7text20">Кит</string>
+
+
+
+
+</resources>

@@ -1,6 +1,6 @@
 package com.example.play;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,34 +23,35 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText nameEditText;
     private TextView emailTextView;
     private Button editSaveButton;
+    private Button deleteButton;
     private TextView coinsTextView;
     private TextView timeSpentTextView;
     private ImageButton backButton;
+
     private FirebaseUser currentUser;
     private DatabaseReference userRef;
     private boolean isEditing = false;
     private int coins;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        backButton = findViewById(R.id.buttonBack);
-
-        // Нажали "Назад" — просто закрываем текущую активность
-        backButton.setOnClickListener(v -> finish());
-
         // Инициализация вью
+        backButton = findViewById(R.id.buttonBack);
         emailTextView = findViewById(R.id.emailTextView);
         nameEditText = findViewById(R.id.nameEditText);
         editSaveButton = findViewById(R.id.saveButton);
+        deleteButton = findViewById(R.id.deleteButton);
         coinsTextView = findViewById(R.id.coinsTextView);
         timeSpentTextView = findViewById(R.id.timeSpentTextView);
         timeSpentTextView.setText("Время в игре: 00:00");
 
-        // Получаем текущего пользователя
+        // Обработка кнопки "Назад"
+        backButton.setOnClickListener(v -> finish());
+
+        // Получаем текущего пользователя Firebase
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             Toast.makeText(this, "Пользователь не авторизован", Toast.LENGTH_LONG).show();
@@ -64,23 +65,21 @@ public class ProfileActivity extends AppCompatActivity {
         String uid = currentUser.getUid();
         userRef = FirebaseDatabase.getInstance().getReference("users").child(uid);
 
-        // Загрузка и инициализация профиля
+        // Загрузка данных профиля
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
-                    // Первый вход — создаем все нужные поля
+                    // Первый вход — создаем поля
                     userRef.child("email").setValue(currentUser.getEmail());
                     userRef.child("name").setValue("");
                     userRef.child("coins").setValue(0);
-                    userRef.child("maxLevel").setValue(1);  // Первый уровень доступен
                     userRef.child("totalPlayTime").setValue(0L);
-
                     nameEditText.setText("");
                     coinsTextView.setText("Монеты: 0");
                     timeSpentTextView.setText("Время в игре: 00:00");
                 } else {
-                    // Профиль уже существует — загружаем данные
+                    // Профиль существует — загружаем данные
                     String nameFromDB = snapshot.child("name").getValue(String.class);
                     Integer coinsFromDB = snapshot.child("coins").getValue(Integer.class);
                     Long totalSeconds = snapshot.child("totalPlayTime").getValue(Long.class);
@@ -98,10 +97,6 @@ public class ProfileActivity extends AppCompatActivity {
                         timeSpentTextView.setText(formatted);
                     }
                 }
-
-                // Обновляем email каждый раз
-                userRef.child("email").setValue(currentUser.getEmail());
-
                 nameEditText.setEnabled(false);
             }
 
@@ -111,7 +106,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        // Обработка кнопки "Редактировать / Сохранить"
+        // Кнопка редактировать/сохранить имя
         editSaveButton.setOnClickListener(v -> {
             if (isEditing) {
                 String newName = nameEditText.getText().toString().trim();
@@ -127,8 +122,34 @@ public class ProfileActivity extends AppCompatActivity {
             }
             isEditing = !isEditing;
         });
+
+        // Кнопка удаления аккаунта
+        deleteButton.setOnClickListener(v -> {
+            if (currentUser != null) {
+                String uidToDelete = currentUser.getUid();
+
+                // Удаляем из Firebase Realtime DB
+                userRef.removeValue().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Удаляем аккаунт из Firebase Auth
+                        currentUser.delete().addOnCompleteListener(authTask -> {
+                            if (authTask.isSuccessful()) {
+                                Toast.makeText(ProfileActivity.this, "Аккаунт удалён", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                                finish();
+                            } else {
+                                Toast.makeText(ProfileActivity.this, "Ошибка удаления аккаунта: " + authTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        Toast.makeText(ProfileActivity.this, "Ошибка удаления данных пользователя", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
+    // Метод для начисления монеты
     public void awardCoin() {
         coins++;
         coinsTextView.setText("Монеты: " + coins);

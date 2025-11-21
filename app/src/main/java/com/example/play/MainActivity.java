@@ -2,8 +2,7 @@ package com.example.play;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -14,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,42 +41,52 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             } catch (Exception e) {
-                // обработка ошибок
-            }
-        });
-        ImageView imageView8 = findViewById(R.id.imageView8);
-        imageView8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                startActivity(intent);
+                e.printStackTrace();
             }
         });
 
+        // Кнопка "Профиль"
+        ImageView imageView8 = findViewById(R.id.imageView8);
+        imageView8.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        });
+
+        // Кнопка "Настройки"
         ImageView imageView5 = findViewById(R.id.imageView5);
         imageView5.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         });
-        
 
         // Настройка полноэкранного режима
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        // Загрузка всех локальных пользователей из Room
+        loadLocalUsers();
+    }
+
+    // Метод для вывода всех локальных пользователей в Logcat
+    private void loadLocalUsers() {
+        new Thread(() -> {
+            AppDatabase db = AppDatabase.getDatabase(this);
+            List<User> users = db.userDao().getAllUsers(); // Предполагаем, что есть метод getAllUsers()
+            for (User u : users) {
+                Log.d("LocalUser", "Name: " + u.getName() + ", Email: " + u.getEmail());
+            }
+        }).start();
     }
 
     // Обработка кнопки "Назад" для двойного подтверждения выхода
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            backToast.cancel();
+            if (backToast != null) backToast.cancel();
             super.onBackPressed();
-            return;
         } else {
-            backToast = Toast.makeText(getBaseContext(), "Нажмите еще раз, чтобы выйти", Toast.LENGTH_SHORT);
+            backToast = Toast.makeText(this, "Нажмите еще раз, чтобы выйти", Toast.LENGTH_SHORT);
             backToast.show();
         }
-
         backPressedTime = System.currentTimeMillis();
     }
 }
-

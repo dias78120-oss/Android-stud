@@ -71,6 +71,16 @@
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="DiscouragedApi" />
+        <activity
+            android:name=".Level9"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi" />
+        <activity
+            android:name=".Level10"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi" />
 
         <!-- Активность для авторизации (LoginActivity) -->
         <activity

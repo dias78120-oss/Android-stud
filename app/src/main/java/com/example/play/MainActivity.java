@@ -1,17 +1,22 @@
 package com.example.play;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.AppCompatDelegate;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
@@ -24,17 +29,28 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences settingsPrefs = getSharedPreferences("Settings", MODE_PRIVATE);
+        boolean isDarkMode = settingsPrefs.getBoolean("isDarkMode", false);
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
         super.onCreate(savedInstanceState);
+        // Устанавливаем полноэкранный режим до setContentView для плавной отрисовки
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
 
-        // Настройка Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        // --- Инициализация элементов нового макета ---
+        ImageView quizLogo = findViewById(R.id.quiz_logo);
+        TextView gameTitle = findViewById(R.id.game_title);
+        MaterialButton buttonStart = findViewById(R.id.buttonStart);
+        ImageButton buttonSettings = findViewById(R.id.buttonSettings);
+        ImageButton buttonProfile = findViewById(R.id.buttonProfile);
 
-        // Кнопка "Начать игру"
-        Button buttonStart = findViewById(R.id.buttonStart);
+        // --- Установка обработчиков нажатий ---
         buttonStart.setOnClickListener(view -> {
             try {
                 Intent intent = new Intent(MainActivity.this, GameLevels.class);
@@ -45,44 +61,56 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Кнопка "Профиль"
-        ImageView imageView8 = findViewById(R.id.imageView8);
-        imageView8.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-            startActivity(intent);
-        });
-
-        // Кнопка "Настройки"
-        ImageView imageView5 = findViewById(R.id.imageView5);
-        imageView5.setOnClickListener(v -> {
+        buttonSettings.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         });
 
-        // Настройка полноэкранного режима
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        buttonProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        });
 
-        // Загрузка всех локальных пользователей из Room
+        // --- Запускаем анимацию появления элементов ---
+        // Создаем разные анимации для разных элементов для лучшего эффекта
+        Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in); // Убедитесь, что этот файл тоже есть
+
+        quizLogo.startAnimation(fadeIn);
+        gameTitle.startAnimation(fadeIn);
+        buttonStart.startAnimation(slideUp);
+
+        // Загрузка локальных пользователей (без изменений)
         loadLocalUsers();
     }
 
-    // Метод для вывода всех локальных пользователей в Logcat
+    /**
+     * Метод для вывода всех локальных пользователей в Logcat.
+     * Работает в фоновом потоке, чтобы не блокировать UI.
+     */
     private void loadLocalUsers() {
         new Thread(() -> {
-            AppDatabase db = AppDatabase.getDatabase(this);
-            List<User> users = db.userDao().getAllUsers(); // Предполагаем, что есть метод getAllUsers()
-            for (User u : users) {
-                Log.d("LocalUser", "Name: " + u.getName() + ", Email: " + u.getEmail());
+            try {
+                AppDatabase db = AppDatabase.getDatabase(getApplicationContext());
+                List<User> users = db.userDao().getAllUsers();
+                for (User u : users) {
+                    Log.d("LocalUser", "Name: " + u.getName() + ", Email: " + u.getEmail());
+                }
+            } catch (Exception e) {
+                Log.e("DB_Error", "Failed to load local users", e);
             }
         }).start();
     }
 
-    // Обработка кнопки "Назад" для двойного подтверждения выхода
+    /**
+     * Обработка кнопки "Назад" для выхода из приложения по двойному нажатию.
+     */
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             if (backToast != null) backToast.cancel();
             super.onBackPressed();
+            return; // Выход из приложения
         } else {
             backToast = Toast.makeText(this, "Нажмите еще раз, чтобы выйти", Toast.LENGTH_SHORT);
             backToast.show();

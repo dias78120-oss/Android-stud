@@ -46,7 +46,7 @@ public class Level10 extends AppCompatActivity {
 
         //Создаем переменную text_levels
         TextView text_levels = findViewById(R.id.text_levels);
-        text_levels.setText(R.string.Level7); //Установили текст
+        text_levels.setText(R.string.Level10); //Установили текст
 
         final ImageView img_left = (ImageView)findViewById(R.id.img_left);
         //код который скургляет углы левой картинки

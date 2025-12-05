@@ -80,14 +80,19 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    // LoginActivity.java
+
     private void signInWithGoogle() {
+        // Настройка Google Sign-In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("ВАШ_ID_КЛИЕНТА_ИЗ_FIREBASE") // заменить на свой
+                // ЗАМЕНИТЕ СТРОКУ-ЗАГЛУШКУ НА ЭТОТ КОД:
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
         GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, gso);
-        startActivityForResult(googleSignInClient.getSignInIntent(), RC_SIGN_IN);
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     @Override
@@ -100,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
-                Toast.makeText(this, "Ошибка входа через Google: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Ошибка входа через Google. Код: " + e.getStatusCode(), Toast.LENGTH_LONG).show();
             }
         }
     }

@@ -1,11 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Базовая дневная тема -->
     <style name="Theme.Play" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Цвета -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="android:colorBackground">@color/backgroundColor</item>
-        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <!-- Основные цвета -->
+        <item name="colorPrimary">#6750A4</item> <!-- Фиолетовый Material You -->
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">#EADDFF</item>
+        <item name="colorOnPrimaryContainer">#21005D</item>
+
+        <item name="android:statusBarColor">@color/black</item>
+
+        <!-- ВАЖНО: Иконки в статус-баре делаем темными для светлого фона -->
+        <item name="android:windowLightStatusBar">true</item>
     </style>
-
-
-
 </resources>

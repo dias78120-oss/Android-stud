@@ -100,7 +100,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void signInWithGoogle() {
         // Настройка Google Sign-In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)) // Используйте ваш Web Client ID
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -117,11 +117,9 @@ public class SignUpActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-                // Получаем аккаунт Google
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
-                // Ошибка аутентификации
                 Toast.makeText(this, "Ошибка входа с Google: " + e.getStatusCode(), Toast.LENGTH_SHORT).show();
             }
         }
@@ -129,19 +127,16 @@ public class SignUpActivity extends AppCompatActivity {
 
     // Авторизация с помощью Google в Firebase
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
-        // Получаем ID токен
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
 
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Переход на главную активность после успешной аутентификации
                         FirebaseUser user = mAuth.getCurrentUser();
                         Toast.makeText(SignUpActivity.this, "Добро пожаловать, " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                         finish();
                     } else {
-                        // Ошибка аутентификации
                         Toast.makeText(SignUpActivity.this, "Ошибка входа: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

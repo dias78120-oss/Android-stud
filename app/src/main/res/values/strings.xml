@@ -11,8 +11,27 @@
     <string name="Level6">Уровень 6</string>
     <string name="Level7">Уровень 7</string>
     <string name="Level8">Уровень 8</string>
+    <string name="Level9">Уровень 9</string>
+    <string name="Level10">Уровень 10</string>
     <string name="textcontinue">Продолжить</string>
     <string name="button">кнопка</string>
     <string name="default_web_client_id">926841970234-vs5ebuk0b9ggj3c2fj341uo9jlj9r9t9.apps.googleusercontent.com</string>
+    <string name="settings_button_description">Настройки</string>
+    <string name="profile_button_description">Профиль</string>
+    <string name="settings">Настройки</string>
+    <string name="back_button">Назад</string>
+    <string name="music">Музыка</string>
+    <string name="dark_theme">Тёмная тема</string>
+    <string name="select_track">Выберите трек</string>
+    <string name="track_1">Трек 1</string>
+    <string name="track_2">Трек 2</string>
+    <string name="track_3">Трек 3</string>
+    <string name="track_4">Трек 4</string>
+    <string name="log_out">Выйти из аккаунта</string>
+    <string name="main_settings_header">Основные</string>
+    <string name="music_description">Включить/выключить фоновую музыку</string>
+    <string name="theme_description">Переключиться на тёмное оформление</string>
+
+
 
 </resources>

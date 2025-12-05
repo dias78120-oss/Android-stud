@@ -32,11 +32,11 @@ public class Level9 extends AppCompatActivity {
     Dialog dialogEnd;
 
     private static final int LEVEL_NUMBER = 9;
-    public int numLeft; //Переменная для левой картинки + текст
-    public int numRight; //Переменная для правой картинки + текст
-    Array array = new Array(); //Создали новый объект из класс Array
-    Random random = new Random(); //Для генераций случайных чисел
-    public int count = 0; //Счетчик правильных ответов
+    public int numLeft;
+    public int numRight;
+    Array array = new Array();
+    Random random = new Random();
+    public int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class Level9 extends AppCompatActivity {
 
         //Создаем переменную text_levels
         TextView text_levels = findViewById(R.id.text_levels);
-        text_levels.setText(R.string.Level7); //Установили текст
+        text_levels.setText(R.string.Level9); //Установили текст
 
         final ImageView img_left = (ImageView)findViewById(R.id.img_left);
         //код который скургляет углы левой картинки
